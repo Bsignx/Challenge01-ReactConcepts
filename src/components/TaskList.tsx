@@ -14,7 +14,7 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-console.log(tasks)
+
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     newTaskTitle && setTasks([...tasks, {id: uuidv4(), title: newTaskTitle, isComplete:false}])
