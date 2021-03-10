@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 import '../styles/tasklist.scss'
 
@@ -13,17 +14,27 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-
+console.log(tasks)
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    newTaskTitle && setTasks([...tasks, {id: uuidv4(), title: newTaskTitle, isComplete:false}])
+    setNewTaskTitle('')
   }
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const mappedTasks = tasks.map(task => {
+      task.id === id ? task.isComplete = !task.isComplete : task.isComplete
+      return task
+    })
+
+    setTasks(mappedTasks)
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
+    const filtredTasks = tasks.filter(task => task.id !== id)
+    setTasks(filtredTasks)
   }
 
   return (
